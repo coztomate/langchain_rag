@@ -11,4 +11,10 @@ license: mit
 ---
 
 # langchain_rag
-in progress
+
+Hugging Face [App](https://huggingface.co/spaces/coztomate/langchain_rag) to answer questions based on uploaded PDFs.
+
+Work in progress. Planned integration with knowledge storage in Qdrant vector database.
+
+
+
