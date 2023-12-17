@@ -1,0 +1,7 @@
+gradio==4.10.0
+langchain
+PyPDF2==3.0.1
+python-dotenv==1.0.0
+openai==0.27.6
+faiss-cpu==1.7.4
+tiktoken==0.4.0
