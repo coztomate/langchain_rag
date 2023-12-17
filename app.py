@@ -10,10 +10,10 @@ import os
 
 def process_pdf_and_answer_question(pdf, user_question, openai_key):
     if pdf is None or user_question == "":
-        return "Please upload a PDF and enter a question."
+        return "Please upload a PDF and enter a question.", None
 
     if not pdf.name.lower().endswith('.pdf'):
-        return "Please upload a PDF file."
+        return "Please upload a PDF file.", None
 
     pdf_reader = PdfReader(pdf)
     text = ""
@@ -43,21 +43,16 @@ def process_pdf_and_answer_question(pdf, user_question, openai_key):
 
     return response
 
-with gr.Blocks() as demo:
-    with gr.Accordion("Enter OpenAI API Key for the app to work"):
-        openai_key = gr.Textbox(label="API Key", placeholder="Enter your OpenAI API Key here")
+# Define the Gradio Interface
+gradio_app = gr.Interface(
+    fn=process_pdf_and_answer_question,
+    inputs=[
+        gr.File(label="Upload a PDF"),
+        gr.Textbox(label="Ask a question about this PDF:"),
+        gr.Textbox(label="Enter your OpenAI API Key:")
+    ],
+    outputs=gr.Textbox(label="Response")
+)
 
-    gr.Markdown("Q&A on your PDF")
-    with gr.Row():
-        pdf = gr.File(label="Upload a PDF")
-        user_question = gr.Textbox(label="Ask a question about this PDF:")
-        answer_button = gr.Button("Answer")
-    response = gr.Textbox(label="Response", interactive=False)
-
-    answer_button.click(
-        fn=process_pdf_and_answer_question,
-        inputs=[pdf, user_question, openai_key],
-        outputs=response
-    )
-
-demo.launch(share=True)
+if __name__ == "__main__":
+    gradio_app.launch()
